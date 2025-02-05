@@ -1,29 +1,28 @@
 package com.naitech.cursomc.controllers;
 
-
-
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.naitech.cursomc.domain.Category;
+import com.naitech.cursomc.services.CategoryService;
 
 @RestController
-@RequestMapping(value="/categories")
+@RequestMapping(value = "/categories")
 public class CategoryController {
 
-	@GetMapping
-	public List<Category> list() {
-		Category category1 = new Category(1, "Informatica");
-		Category category2 = new Category(2, "Escritorio");
-		
-		List<Category> list = new ArrayList<>();
-		list.add(category1);
-		list.add(category2);
-		
-		return list;
+	private CategoryService categoryService;
+
+	public CategoryController(CategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
+
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<?> findById(@PathVariable Integer id) {
+		Category category = categoryService.find(id);
+
+		return ResponseEntity.ok().body(category);
 	}
 }
