@@ -9,27 +9,32 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 
 @Entity
-public class Category implements Serializable {
+public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	
-	@ManyToMany(mappedBy = "categories")
-	private List<Product> products = new ArrayList<>();
+	private Double price;
 
-	public Category() {
+	@ManyToMany
+	@JoinTable(name = "PRODUCT_CATEGORY", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private List<Category> categories = new ArrayList<>();
+
+	public Product() {
 	}
 
-	public Category(Integer id, String name) {
+	public Product(Integer id, String name, Double price) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.price = price;
 	}
 
 	public Integer getId() {
@@ -48,17 +53,25 @@ public class Category implements Serializable {
 		this.name = name;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name);
+		return Objects.hash(categories, id, name, price);
 	}
 
 	@Override
@@ -69,8 +82,9 @@ public class Category implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+		Product other = (Product) obj;
+		return Objects.equals(categories, other.categories) && Objects.equals(id, other.id)
+				&& Objects.equals(name, other.name) && Objects.equals(price, other.price);
 	}
 
 }
