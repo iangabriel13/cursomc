@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.naitech.cursomc.domain.Address;
 import com.naitech.cursomc.domain.Category;
 import com.naitech.cursomc.domain.City;
+import com.naitech.cursomc.domain.Client;
 import com.naitech.cursomc.domain.Product;
 import com.naitech.cursomc.domain.State;
+import com.naitech.cursomc.domain.enums.ClientType;
+import com.naitech.cursomc.repositories.AddressRepository;
 import com.naitech.cursomc.repositories.CategoryRepository;
 import com.naitech.cursomc.repositories.CityRepository;
+import com.naitech.cursomc.repositories.ClientRepository;
 import com.naitech.cursomc.repositories.ProductRepository;
 import com.naitech.cursomc.repositories.StateRepository;
 
@@ -30,6 +35,12 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private CityRepository cityRepository;
+	
+	@Autowired
+	private ClientRepository clientRepository;
+
+	@Autowired
+	private AddressRepository addressRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -66,6 +77,18 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
+		
+		Client client1 = new Client(null, "Maria Silva", "maria@gmail.com", "00000000000", ClientType.PESSOAFISICA);
+		
+		client1.getPhones().addAll(Arrays.asList("000000000", "111111111"));
+		
+		Address address1 = new Address(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", client1, city1);
+		Address address2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38220777", client1, city2);
+		
+		client1.getAddresses().addAll(Arrays.asList(address1, address2));
+		
+		clientRepository.saveAll(Arrays.asList(client1));
+		addressRepository.saveAll(Arrays.asList(address1, address2));
 	}
 
 }
