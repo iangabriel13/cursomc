@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.naitech.cursomc.domain.Address;
 import com.naitech.cursomc.domain.City;
@@ -40,6 +41,7 @@ public class ClientService {
 				() -> new ObjectNotFoundException("Client not found! Id: " + id + ", Type: " + Client.class.getName()));
 	}
 
+	@Transactional
 	public Client insert(Client client) {
 		client.setId(null);
 		client = clientRepository.save(client);
@@ -47,6 +49,7 @@ public class ClientService {
 		return client;
 	}
 
+	@Transactional
 	public Client update(Client client) {
 		Client clientDatabase = find(client.getId());
 		updateClient(clientDatabase, client);
@@ -58,6 +61,7 @@ public class ClientService {
 		clientDatabase.setEmail(client.getEmail());
 	}
 
+	@Transactional
 	public void delete(Integer id) {
 		Client client = find(id);
 

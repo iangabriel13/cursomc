@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.naitech.cursomc.domain.Category;
 import com.naitech.cursomc.dto.CategoryDTO;
@@ -13,10 +14,7 @@ import com.naitech.cursomc.repositories.CategoryRepository;
 import com.naitech.cursomc.services.exceptions.DataIntegrityException;
 import com.naitech.cursomc.services.exceptions.ObjectNotFoundException;
 
-import jakarta.transaction.Transactional;
-
 @Service
-@Transactional
 public class CategoryService {
 
 	private CategoryRepository categoryRepository;
@@ -36,11 +34,13 @@ public class CategoryService {
 				"Category not found! Id: " + id + ", Type: " + Category.class.getName()));
 	}
 
+	@Transactional
 	public Category insert(Category category) {
 		category.setId(null);
 		return categoryRepository.save(category);
 	}
 
+	@Transactional
 	public Category update(Category category) {
 		Category categoryDatabase = find(category.getId());
 		updateCategory(categoryDatabase, category);
@@ -51,6 +51,7 @@ public class CategoryService {
 		categoryDatabase.setName(category.getName());
 	}
 
+	@Transactional
 	public void delete(Integer id) {
 		Category category = find(id);
 
