@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.naitech.cursomc.domain.Category;
 import com.naitech.cursomc.repositories.CategoryRepository;
+import com.naitech.cursomc.services.exceptions.DataIntegrityException;
 import com.naitech.cursomc.services.exceptions.ObjectNotFoundException;
 
 import jakarta.transaction.Transactional;
@@ -35,6 +36,16 @@ public class CategoryService {
 	public Category update(Category category) {
 		find(category.getId());
 		return categoryRepository.save(category);
+	}
+
+	public void delete(Integer id) {
+		Category category = find(id);
+
+		if (category.getProducts() != null && category.getProducts().size() > 0) {
+			throw new DataIntegrityException("Category has products! Id: " + id);
+		}
+
+		categoryRepository.deleteById(id);
 	}
 
 }
