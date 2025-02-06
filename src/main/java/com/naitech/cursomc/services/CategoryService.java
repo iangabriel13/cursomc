@@ -1,8 +1,11 @@
 package com.naitech.cursomc.services;
 
+
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.naitech.cursomc.domain.Category;
@@ -54,5 +57,8 @@ public class CategoryService {
 	}
 
 
+	public Page<Category> findPage(Pageable pageable) {
+		return categoryRepository.findAll(pageable);
+	}
 
 }
