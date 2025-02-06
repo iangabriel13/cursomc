@@ -3,11 +3,13 @@ package com.naitech.cursomc.dto;
 import java.io.Serializable;
 
 import com.naitech.cursomc.domain.Client;
+import com.naitech.cursomc.services.validation.ClientUpdate;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+@ClientUpdate
 public class ClientDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
