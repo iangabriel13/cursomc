@@ -2,22 +2,47 @@ package com.naitech.cursomc.dto;
 
 import java.io.Serializable;
 
+import com.naitech.cursomc.services.validation.ClientInsert;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
+@ClientInsert
 public class ClientNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@NotEmpty(message = "Cannot be empty")
+	@Size(min = 5, max = 80, message = "The length should be between 5 and 80 characters")
 	private String name;
+
+	@NotEmpty(message = "Cannot be empty")
+	@Email(message = "Invalid email")
 	private String email;
+
+	@NotEmpty(message = "Cannot be empty")
 	private String cpfOuCnpj;
+
 	private Integer clientType;
 
+	@NotEmpty(message = "Cannot be empty")
 	private String address;
+
+	@NotEmpty(message = "Cannot be empty")
 	private String number;
+
 	private String complement;
+
 	private String neighbourhood;
+
+	@NotEmpty(message = "Cannot be empty")
 	private String postcode;
 
+	@NotEmpty(message = "Cannot be empty")
 	private String phone1;
+
 	private String phone2;
+
 	private String phone3;
 
 	private Integer cityId;
