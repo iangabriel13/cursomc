@@ -65,10 +65,6 @@ public class ClientService {
 			throw new DataIntegrityException("Client has orders! Id: " + id);
 		}
 
-		if (client.getAddresses() != null && client.getAddresses().size() > 0) {
-			throw new DataIntegrityException("Client has addresses! Id: " + id);
-		}
-
 		clientRepository.deleteById(id);
 	}
 
