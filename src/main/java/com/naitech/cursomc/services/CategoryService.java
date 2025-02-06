@@ -1,5 +1,6 @@
 package com.naitech.cursomc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -21,6 +22,10 @@ public class CategoryService {
 		this.categoryRepository = categoryRepository;
 	}
 
+	public List<Category> findAll() {
+		return categoryRepository.findAll();
+	}
+	
 	public Category find(Integer id) {
 		Optional<Category> category = categoryRepository.findById(id);
 
@@ -47,5 +52,7 @@ public class CategoryService {
 
 		categoryRepository.deleteById(id);
 	}
+
+
 
 }
