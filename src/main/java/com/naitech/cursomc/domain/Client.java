@@ -49,7 +49,7 @@ public class Client implements Serializable {
 		this.name = name;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.clientType = clientType.getId();
+		this.clientType = (clientType == null) ? null : clientType.getId();
 	}
 
 	public Integer getId() {

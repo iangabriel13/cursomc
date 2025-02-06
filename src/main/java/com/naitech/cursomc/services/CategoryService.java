@@ -1,6 +1,5 @@
 package com.naitech.cursomc.services;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +28,7 @@ public class CategoryService {
 	public List<Category> findAll() {
 		return categoryRepository.findAll();
 	}
-	
+
 	public Category find(Integer id) {
 		Optional<Category> category = categoryRepository.findById(id);
 
@@ -57,11 +56,10 @@ public class CategoryService {
 		categoryRepository.deleteById(id);
 	}
 
-
 	public Page<Category> findPage(Pageable pageable) {
 		return categoryRepository.findAll(pageable);
 	}
-	
+
 	public Category fromDTO(CategoryDTO categoryDTO) {
 		return new Category(categoryDTO.getId(), categoryDTO.getName());
 	}
