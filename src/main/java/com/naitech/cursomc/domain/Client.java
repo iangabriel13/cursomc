@@ -38,6 +38,10 @@ public class Client implements Serializable {
 	@CollectionTable(name = "PHONES")
 	private Set<String> phones = new HashSet<>();
 
+	@JsonManagedReference
+	@OneToMany(mappedBy = "client")
+	private List<ClientOrder> orders = new ArrayList<>();
+
 	public Client() {
 	}
 
@@ -105,9 +109,17 @@ public class Client implements Serializable {
 		this.phones = phones;
 	}
 
+	public List<ClientOrder> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<ClientOrder> orders) {
+		this.orders = orders;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(addresses, clientType, cpfOuCnpj, email, id, name, phones);
+		return Objects.hash(addresses, clientType, cpfOuCnpj, email, id, name, orders, phones);
 	}
 
 	@Override
@@ -122,7 +134,7 @@ public class Client implements Serializable {
 		return Objects.equals(addresses, other.addresses) && Objects.equals(clientType, other.clientType)
 				&& Objects.equals(cpfOuCnpj, other.cpfOuCnpj) && Objects.equals(email, other.email)
 				&& Objects.equals(id, other.id) && Objects.equals(name, other.name)
-				&& Objects.equals(phones, other.phones);
+				&& Objects.equals(orders, other.orders) && Objects.equals(phones, other.phones);
 	}
 
 }
