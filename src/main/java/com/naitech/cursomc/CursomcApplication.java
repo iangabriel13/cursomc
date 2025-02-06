@@ -15,6 +15,7 @@ import com.naitech.cursomc.domain.Category;
 import com.naitech.cursomc.domain.City;
 import com.naitech.cursomc.domain.Client;
 import com.naitech.cursomc.domain.ClientOrder;
+import com.naitech.cursomc.domain.ItemOrder;
 import com.naitech.cursomc.domain.Payment;
 import com.naitech.cursomc.domain.Product;
 import com.naitech.cursomc.domain.State;
@@ -24,6 +25,7 @@ import com.naitech.cursomc.repositories.AddressRepository;
 import com.naitech.cursomc.repositories.CategoryRepository;
 import com.naitech.cursomc.repositories.CityRepository;
 import com.naitech.cursomc.repositories.ClientRepository;
+import com.naitech.cursomc.repositories.ItemOrderRepository;
 import com.naitech.cursomc.repositories.OrderRepository;
 import com.naitech.cursomc.repositories.PaymentRepository;
 import com.naitech.cursomc.repositories.ProductRepository;
@@ -55,6 +57,9 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private PaymentRepository paymentRepository;
+	
+	@Autowired
+	private ItemOrderRepository itemOrderRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -120,6 +125,19 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		orderRepository.saveAll(Arrays.asList(order1, order2));
 		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
+		
+		ItemOrder itemOrder1 = new ItemOrder(order1, product1, 0.00, 1, 2000.00);
+		ItemOrder itemOrder2 = new ItemOrder(order1, product3, 0.00, 1, 80.00);
+		ItemOrder itemOrder3 = new ItemOrder(order2, product2, 100.00, 1, 800.00);
+		
+		order1.getItems().addAll(Arrays.asList(itemOrder1, itemOrder2));
+		order2.getItems().addAll(Arrays.asList(itemOrder3));
+		
+		product1.getItems().addAll(Arrays.asList(itemOrder1));
+		product2.getItems().addAll(Arrays.asList(itemOrder3));
+		product3.getItems().addAll(Arrays.asList(itemOrder2));
+		
+		itemOrderRepository.saveAll(Arrays.asList(itemOrder1, itemOrder2, itemOrder3));
 	}
 
 }

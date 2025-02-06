@@ -62,7 +62,7 @@ public class City implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, state);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class City implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		City other = (City) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(state, other.state);
+		return Objects.equals(id, other.id);
 	}
 
 }

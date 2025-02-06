@@ -19,12 +19,12 @@ import jakarta.persistence.OneToOne;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Integer paymentStatus;
-	
+
 	@OneToOne
 	@JoinColumn(name = "order_id")
 	@MapsId
@@ -65,7 +65,7 @@ public abstract class Payment implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, order, paymentStatus);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -77,8 +77,7 @@ public abstract class Payment implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Payment other = (Payment) obj;
-		return Objects.equals(id, other.id) && Objects.equals(order, other.order)
-				&& paymentStatus == other.paymentStatus;
+		return Objects.equals(id, other.id);
 	}
-	
+
 }

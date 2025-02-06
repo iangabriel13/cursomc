@@ -116,7 +116,7 @@ public class Address implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(address, city, client, complement, id, neighbourhood, number, postcode);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -128,10 +128,7 @@ public class Address implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Address other = (Address) obj;
-		return Objects.equals(address, other.address) && Objects.equals(city, other.city)
-				&& Objects.equals(client, other.client) && Objects.equals(complement, other.complement)
-				&& Objects.equals(id, other.id) && Objects.equals(neighbourhood, other.neighbourhood)
-				&& Objects.equals(number, other.number) && Objects.equals(postcode, other.postcode);
+		return Objects.equals(id, other.id);
 	}
 
 }

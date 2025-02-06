@@ -61,7 +61,7 @@ public class State implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cities, id, name);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class State implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		State other = (State) obj;
-		return Objects.equals(cities, other.cities) && Objects.equals(id, other.id) && Objects.equals(name, other.name);
+		return Objects.equals(id, other.id);
 	}
 
 }

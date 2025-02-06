@@ -2,7 +2,9 @@ package com.naitech.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -11,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -32,6 +35,9 @@ public class ClientOrder implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "delivery_address_id")
 	private Address deliveryAddress;
+
+	@OneToMany(mappedBy = "id.clientOrder")
+	private Set<ItemOrder> items = new HashSet<>();
 
 	public ClientOrder() {
 	}
@@ -83,9 +89,17 @@ public class ClientOrder implements Serializable {
 		this.deliveryAddress = deliveryAddress;
 	}
 
+	public Set<ItemOrder> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<ItemOrder> items) {
+		this.items = items;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(client, dateOrder, deliveryAddress, id, payment);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -97,9 +111,7 @@ public class ClientOrder implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ClientOrder other = (ClientOrder) obj;
-		return Objects.equals(client, other.client) && Objects.equals(dateOrder, other.dateOrder)
-				&& Objects.equals(deliveryAddress, other.deliveryAddress) && Objects.equals(id, other.id)
-				&& Objects.equals(payment, other.payment);
+		return Objects.equals(id, other.id);
 	}
 
 }

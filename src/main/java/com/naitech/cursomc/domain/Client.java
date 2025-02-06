@@ -119,7 +119,7 @@ public class Client implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(addresses, clientType, cpfOuCnpj, email, id, name, orders, phones);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -131,10 +131,7 @@ public class Client implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Client other = (Client) obj;
-		return Objects.equals(addresses, other.addresses) && Objects.equals(clientType, other.clientType)
-				&& Objects.equals(cpfOuCnpj, other.cpfOuCnpj) && Objects.equals(email, other.email)
-				&& Objects.equals(id, other.id) && Objects.equals(name, other.name)
-				&& Objects.equals(orders, other.orders) && Objects.equals(phones, other.phones);
+		return Objects.equals(id, other.id);
 	}
 
 }
