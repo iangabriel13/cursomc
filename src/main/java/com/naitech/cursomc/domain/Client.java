@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.naitech.cursomc.domain.enums.ClientType;
 
@@ -38,7 +39,7 @@ public class Client implements Serializable {
 	@CollectionTable(name = "PHONES")
 	private Set<String> phones = new HashSet<>();
 
-	@JsonManagedReference
+	@JsonBackReference
 	@OneToMany(mappedBy = "client")
 	private List<ClientOrder> orders = new ArrayList<>();
 

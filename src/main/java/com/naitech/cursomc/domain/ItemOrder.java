@@ -3,6 +3,8 @@ package com.naitech.cursomc.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 
@@ -10,6 +12,7 @@ import jakarta.persistence.Entity;
 public class ItemOrder implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@JsonIgnore
 	@EmbeddedId
 	private ItemOrderPK id = new ItemOrderPK();
 
@@ -28,6 +31,7 @@ public class ItemOrder implements Serializable {
 		this.price = price;
 	}
 
+	@JsonIgnore
 	public ClientOrder getClientOrder() {
 		return id.getClientOrder();
 	}

@@ -26,7 +26,7 @@ import com.naitech.cursomc.repositories.CategoryRepository;
 import com.naitech.cursomc.repositories.CityRepository;
 import com.naitech.cursomc.repositories.ClientRepository;
 import com.naitech.cursomc.repositories.ItemOrderRepository;
-import com.naitech.cursomc.repositories.OrderRepository;
+import com.naitech.cursomc.repositories.ClientOrderRepository;
 import com.naitech.cursomc.repositories.PaymentRepository;
 import com.naitech.cursomc.repositories.ProductRepository;
 import com.naitech.cursomc.repositories.StateRepository;
@@ -53,7 +53,7 @@ public class CursomcApplication implements CommandLineRunner {
 	private AddressRepository addressRepository;
 
 	@Autowired
-	private OrderRepository orderRepository;
+	private ClientOrderRepository orderRepository;
 
 	@Autowired
 	private PaymentRepository paymentRepository;

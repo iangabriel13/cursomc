@@ -3,6 +3,7 @@ package com.naitech.cursomc.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.naitech.cursomc.domain.enums.PaymentStatus;
 
 import jakarta.persistence.Entity;
@@ -25,6 +26,7 @@ public abstract class Payment implements Serializable {
 	private Integer id;
 	private Integer paymentStatus;
 
+	@JsonBackReference
 	@OneToOne
 	@JoinColumn(name = "order_id")
 	@MapsId
