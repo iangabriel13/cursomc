@@ -53,7 +53,7 @@ public class CategoryController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO categoryDTO) {
+	public ResponseEntity<?> insert(@Valid @RequestBody CategoryDTO categoryDTO) {
 		Category category = categoryService.fromDTO(categoryDTO);
 		category = categoryService.insert(category);
 
