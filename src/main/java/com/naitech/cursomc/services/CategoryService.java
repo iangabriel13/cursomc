@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.naitech.cursomc.domain.Category;
+import com.naitech.cursomc.dto.CategoryDTO;
 import com.naitech.cursomc.repositories.CategoryRepository;
 import com.naitech.cursomc.services.exceptions.DataIntegrityException;
 import com.naitech.cursomc.services.exceptions.ObjectNotFoundException;
@@ -59,6 +60,10 @@ public class CategoryService {
 
 	public Page<Category> findPage(Pageable pageable) {
 		return categoryRepository.findAll(pageable);
+	}
+	
+	public Category fromDTO(CategoryDTO categoryDTO) {
+		return new Category(categoryDTO.getId(), categoryDTO.getName());
 	}
 
 }

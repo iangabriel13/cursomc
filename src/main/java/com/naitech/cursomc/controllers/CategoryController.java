@@ -24,6 +24,8 @@ import com.naitech.cursomc.domain.Category;
 import com.naitech.cursomc.dto.CategoryDTO;
 import com.naitech.cursomc.services.CategoryService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/categories")
 public class CategoryController {
@@ -51,17 +53,19 @@ public class CategoryController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Category category) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO categoryDTO) {
+		Category category = categoryService.fromDTO(categoryDTO);
 		category = categoryService.insert(category);
 
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(category.getId())
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoryDTO.getId())
 				.toUri();
 
 		return ResponseEntity.created(uri).build();
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody Category category) {
+	public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody CategoryDTO categoryDTO) {
+		Category category = categoryService.fromDTO(categoryDTO);
 		category.setId(id);
 		category = categoryService.update(category);
 
@@ -74,20 +78,20 @@ public class CategoryController {
 
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@GetMapping(value = "/page")
-    public ResponseEntity<Page<CategoryDTO>> findAllPagination(
-        @RequestParam(defaultValue = "0") int page,      // Default to page 0
-        @RequestParam(defaultValue = "24") int size,     // Default size 10
-        @RequestParam(defaultValue = "id,asc") String[] sort // Default sorting
-    ) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(parseSort(sort)));
-        Page<Category> categories = categoryService.findPage(pageable);
-        Page<CategoryDTO> categoriesDTO = categories.map(c -> new CategoryDTO(c));
-        return ResponseEntity.ok(categoriesDTO);
-    }
-	
+	public ResponseEntity<Page<CategoryDTO>> findAllPagination(@RequestParam(defaultValue = "0") int page, // Default to
+																											// page 0
+			@RequestParam(defaultValue = "24") int size, // Default size 10
+			@RequestParam(defaultValue = "id,asc") String[] sort // Default sorting
+	) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(parseSort(sort)));
+		Page<Category> categories = categoryService.findPage(pageable);
+		Page<CategoryDTO> categoriesDTO = categories.map(c -> new CategoryDTO(c));
+		return ResponseEntity.ok(categoriesDTO);
+	}
+
 	private Sort.Order parseSort(String[] sort) {
-        return new Sort.Order(Sort.Direction.fromString(sort[1]), sort[0]);
-    }
+		return new Sort.Order(Sort.Direction.fromString(sort[1]), sort[0]);
+	}
 }
