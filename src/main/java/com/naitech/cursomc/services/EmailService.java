@@ -4,9 +4,15 @@ import org.springframework.mail.SimpleMailMessage;
 
 import com.naitech.cursomc.domain.ClientOrder;
 
+import jakarta.mail.internet.MimeMessage;
+
 public interface EmailService {
 
 	void sendOrderConfirmationEmail(ClientOrder clientOrder);
 	
 	void sendEmail(SimpleMailMessage simpleMailMessage);
+	
+	void sendOrderConfirmationHtmlEmail(ClientOrder clientOrder);
+	
+	void sendHtmlEmail(MimeMessage mimeMessage); 
 }

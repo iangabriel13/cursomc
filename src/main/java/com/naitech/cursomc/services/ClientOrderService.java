@@ -65,7 +65,7 @@ public class ClientOrderService {
 			itemOrder.setClientOrder(clientOrder);
 		}
 		itemOrderRepository.saveAll(clientOrder.getItems());
-		emailService.sendOrderConfirmationEmail(clientOrder);
+		emailService.sendOrderConfirmationHtmlEmail(clientOrder);
 		return clientOrder;
 	}
 }

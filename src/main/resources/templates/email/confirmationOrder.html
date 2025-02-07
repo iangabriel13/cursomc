@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:remove="all">Order Confirmation</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div>
+
+		<h1>
+			Order: <span th:text="${clientOrder.id}"> </span>
+		</h1>
+		<p>
+			Date Order: <span th:text="${#dates.format(clientOrder.dateOrder, 'dd/MM/yyyy hh:mm')}"></span>
+		</p>
+		<p>
+			Client: <span th:text="${clientOrder.client.name}"></span>
+		</p>
+		<p>
+			Payment Status: <span th:text="${clientOrder.payment.paymentStatus.description}"></span>
+		</p>
+		<h3>Order Details:</h3>
+		<table border="1">
+			<tr>
+				<th>Product</th>
+				<th>Quantity</th>
+				<th>Price</th>
+				<th>Subtotal</th>
+			</tr>
+			<tr th:each="itemOrder : ${clientOrder.items}">
+				<td th:text="${itemOrder.product.name}">name</td>
+				<td th:text="${itemOrder.quantity}">quantity</td>
+				<td th:text="${#numbers.formatDecimal(itemOrder.price, 0, 'POINT', 2, 'COMMA')}">price</td>
+				<td th:text="${#numbers.formatDecimal(itemOrder.subTotal, 0, 'POINT', 2, 'COMMA')}">subTotal</td>
+			</tr>
+		</table>
+		<p>
+			Total amount: <span th:text="${#numbers.formatDecimal(clientOrder.totalAmount, 0, 'POINT', 2, 'COMMA')}"></span>
+		</p>
+	</div>
+</body>
+
+</html>
