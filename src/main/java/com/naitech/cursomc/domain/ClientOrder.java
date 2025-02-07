@@ -25,7 +25,7 @@ public class ClientOrder implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date dateOrder;
 
@@ -58,10 +58,10 @@ public class ClientOrder implements Serializable {
 		for (ItemOrder itemOrder : items) {
 			soma += itemOrder.getSubTotal();
 		}
-		
+
 		return soma;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
