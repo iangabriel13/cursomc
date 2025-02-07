@@ -80,11 +80,8 @@ public class CategoryController {
 	}
 
 	@GetMapping(value = "/page")
-	public ResponseEntity<Page<CategoryDTO>> findAllPagination(@RequestParam(defaultValue = "0") int page, // Default to
-																											// page 0
-			@RequestParam(defaultValue = "24") int size, // Default size 10
-			@RequestParam(defaultValue = "id,asc") String[] sort // Default sorting
-	) {
+	public ResponseEntity<Page<CategoryDTO>> findAllPagination(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "24") int size, @RequestParam(defaultValue = "id,asc") String[] sort) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(parseSort(sort)));
 		Page<Category> categories = categoryService.findPage(pageable);
 		Page<CategoryDTO> categoriesDTO = categories.map(c -> new CategoryDTO(c));
