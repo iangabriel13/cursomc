@@ -25,16 +25,18 @@ public class ClientOrderService {
 	private ProductRepository productRepository;
 	private ItemOrderRepository itemOrderRepository;
 	private ClientService clientService;
+	private EmailService emailService;
 
 	public ClientOrderService(ClientOrderRepository clientOrderRepository, BankSlipService bankSlipService,
 			PaymentRepository paymentRepository, ProductRepository productRepository,
-			ItemOrderRepository itemOrderRepository, ClientService clientService) {
+			ItemOrderRepository itemOrderRepository, ClientService clientService, EmailService emailService) {
 		this.clientOrderRepository = clientOrderRepository;
 		this.bankSlipService = bankSlipService;
 		this.paymentRepository = paymentRepository;
 		this.productRepository = productRepository;
 		this.itemOrderRepository = itemOrderRepository;
 		this.clientService = clientService;
+		this.emailService = emailService;
 	}
 
 	public ClientOrder find(Integer id) {
@@ -63,7 +65,7 @@ public class ClientOrderService {
 			itemOrder.setClientOrder(clientOrder);
 		}
 		itemOrderRepository.saveAll(clientOrder.getItems());
-		System.out.println(clientOrder);
+		emailService.sendOrderConfirmationEmail(clientOrder);
 		return clientOrder;
 	}
 }
