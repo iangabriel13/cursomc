@@ -24,15 +24,17 @@ public class ClientOrderService {
 	private PaymentRepository paymentRepository;
 	private ProductRepository productRepository;
 	private ItemOrderRepository itemOrderRepository;
+	private ClientService clientService;
 
 	public ClientOrderService(ClientOrderRepository clientOrderRepository, BankSlipService bankSlipService,
 			PaymentRepository paymentRepository, ProductRepository productRepository,
-			ItemOrderRepository itemOrderRepository) {
+			ItemOrderRepository itemOrderRepository, ClientService clientService) {
 		this.clientOrderRepository = clientOrderRepository;
 		this.bankSlipService = bankSlipService;
 		this.paymentRepository = paymentRepository;
 		this.productRepository = productRepository;
 		this.itemOrderRepository = itemOrderRepository;
+		this.clientService = clientService;
 	}
 
 	public ClientOrder find(Integer id) {
@@ -46,6 +48,7 @@ public class ClientOrderService {
 	public ClientOrder insert(ClientOrder clientOrder) {
 		clientOrder.setId(null);
 		clientOrder.setDateOrder(new Date());
+		clientOrder.setClient(clientService.find(clientOrder.getClient().getId()));
 		clientOrder.getPayment().setPaymentStatus(PaymentStatus.PENDENTE);
 		clientOrder.getPayment().setOrder(clientOrder);
 		if (clientOrder.getPayment() instanceof BankSlipPayment) {
@@ -55,11 +58,12 @@ public class ClientOrderService {
 		paymentRepository.save(clientOrder.getPayment());
 		for (ItemOrder itemOrder : clientOrder.getItems()) {
 			itemOrder.setDiscount(0.0);
-			itemOrder.setPrice(productRepository.findById(itemOrder.getProduct().getId()).get().getPrice());
+			itemOrder.setProduct(productRepository.findById(itemOrder.getProduct().getId()).get());
+			itemOrder.setPrice(itemOrder.getProduct().getPrice());
 			itemOrder.setClientOrder(clientOrder);
 		}
 		itemOrderRepository.saveAll(clientOrder.getItems());
-
+		System.out.println(clientOrder);
 		return clientOrder;
 	}
 }

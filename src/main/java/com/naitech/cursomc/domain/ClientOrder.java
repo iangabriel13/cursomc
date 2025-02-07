@@ -1,8 +1,11 @@
 package com.naitech.cursomc.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -125,6 +128,29 @@ public class ClientOrder implements Serializable {
 			return false;
 		ClientOrder other = (ClientOrder) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		StringBuilder builder = new StringBuilder();
+		builder.append("Order: ");
+		builder.append(getId());
+		builder.append(", Date Order: ");
+		builder.append(simpleDateFormat.format(getDateOrder()));
+		builder.append(", Client: ");
+		builder.append(getClient().getName());
+		builder.append(", Payment Status: ");
+		builder.append(getPayment().getPaymentStatus().getDescription());
+		builder.append("\nDetails:\n");
+		for(ItemOrder itemOrder : getItems()) {
+			builder.append(itemOrder.toString());	
+		}
+		builder.append("Total amount: ");
+		builder.append(numberFormat.format(getTotalAmount()));
+		
+		return builder.toString();
 	}
 
 }
