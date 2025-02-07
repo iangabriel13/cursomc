@@ -53,6 +53,15 @@ public class ClientOrder implements Serializable {
 		this.deliveryAddress = deliveryAddress;
 	}
 
+	public double getTotalAmount() {
+		double soma = 0.0;
+		for (ItemOrder itemOrder : items) {
+			soma += itemOrder.getSubTotal();
+		}
+		
+		return soma;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

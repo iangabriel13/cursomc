@@ -155,7 +155,7 @@ public class CursomcApplication implements CommandLineRunner {
 		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
 
 		ItemOrder itemOrder1 = new ItemOrder(order1, product1, 0.00, 1, 2000.00);
-		ItemOrder itemOrder2 = new ItemOrder(order1, product3, 0.00, 1, 80.00);
+		ItemOrder itemOrder2 = new ItemOrder(order1, product3, 0.00, 2, 80.00);
 		ItemOrder itemOrder3 = new ItemOrder(order2, product2, 100.00, 1, 800.00);
 
 		order1.getItems().addAll(Arrays.asList(itemOrder1, itemOrder2));
