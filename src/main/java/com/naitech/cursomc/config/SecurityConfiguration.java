@@ -3,23 +3,25 @@ package com.naitech.cursomc.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.naitech.cursomc.security.JWTAuthenticationFilter;
+import com.naitech.cursomc.security.JWTAuthorizationFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfiguration {
 
-	private final JWTAuthenticationFilter jwtAuthFilter;
+	private final JWTAuthorizationFilter jwtAuthorizationFilter;
 	private final AuthenticationProvider authenticationProvider;
 
-	public SecurityConfiguration(JWTAuthenticationFilter jwtAuthFilter, AuthenticationProvider authenticationProvider) {
-		this.jwtAuthFilter = jwtAuthFilter;
+	public SecurityConfiguration(JWTAuthorizationFilter jwtAuthorizationFilter, AuthenticationProvider authenticationProvider) {
+		this.jwtAuthorizationFilter = jwtAuthorizationFilter;
 		this.authenticationProvider = authenticationProvider;
 	}
 
@@ -30,7 +32,7 @@ public class SecurityConfiguration {
 						.permitAll().anyRequest().authenticated())
 				.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider)
-				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return httpSecurity.build();
 	}
