@@ -48,7 +48,6 @@ public class ClientController {
 		return ResponseEntity.ok().body(clientsDTO);
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<?> findById(@PathVariable Integer id) {
 		Client client = clientService.find(id);
@@ -66,7 +65,6 @@ public class ClientController {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody ClientDTO clientDTO) {
 		Client client = clientService.fromDTO(clientDTO);

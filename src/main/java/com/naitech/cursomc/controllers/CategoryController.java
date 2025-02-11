@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,6 +53,7 @@ public class CategoryController {
 		return ResponseEntity.ok().body(category);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<?> insert(@Valid @RequestBody CategoryDTO categoryDTO) {
 		Category category = categoryService.fromDTO(categoryDTO);
@@ -63,6 +65,7 @@ public class CategoryController {
 		return ResponseEntity.created(uri).build();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody CategoryDTO categoryDTO) {
 		Category category = categoryService.fromDTO(categoryDTO);
@@ -72,6 +75,7 @@ public class CategoryController {
 		return ResponseEntity.noContent().build();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		categoryService.delete(id);
