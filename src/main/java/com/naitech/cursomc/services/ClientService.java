@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +25,13 @@ public class ClientService {
 
 	private ClientRepository clientRepository;
 	private AddressRepository addressRepository;
+	private PasswordEncoder passwordEncoder;
 
-	public ClientService(ClientRepository clientRepository, AddressRepository addressRepository) {
+	public ClientService(ClientRepository clientRepository, AddressRepository addressRepository,
+			PasswordEncoder passwordEncoder) {
 		this.clientRepository = clientRepository;
 		this.addressRepository = addressRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	public List<Client> findAll() {
@@ -77,12 +81,12 @@ public class ClientService {
 	}
 
 	public Client fromDTO(ClientDTO clientDTO) {
-		return new Client(clientDTO.getId(), clientDTO.getName(), clientDTO.getEmail(), null, null);
+		return new Client(clientDTO.getId(), clientDTO.getName(), clientDTO.getEmail(), null, null, null);
 	}
 
 	public Client fromDTO(ClientNewDTO clientNewDTO) {
 		Client client = new Client(null, clientNewDTO.getName(), clientNewDTO.getEmail(), clientNewDTO.getCpfOuCnpj(),
-				ClientType.toEnum(clientNewDTO.getClientType()));
+				ClientType.toEnum(clientNewDTO.getClientType()), passwordEncoder.encode(clientNewDTO.getPassword()));
 		City city = new City(clientNewDTO.getCityId(), null, null);
 		Address address = new Address(null, clientNewDTO.getAddress(), clientNewDTO.getNumber(),
 				clientNewDTO.getComplement(), clientNewDTO.getNeighbourhood(), clientNewDTO.getPostcode(), client,

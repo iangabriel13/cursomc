@@ -6,8 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.naitech.cursomc.domain.Client;
 
-
-
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Integer> {
 

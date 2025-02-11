@@ -18,22 +18,22 @@ public class DevConfig {
 
 	@Autowired
 	private DBService dbService;
-	
+
 	@Value("${spring.jpa.hibernate.ddl-auto}")
 	private String strategy;
 
-    @Bean
-    boolean instantiateDatabase() throws ParseException {
-    	if(!strategy.equalsIgnoreCase("create")) {
-    		return false;
-    	}
-    	
+	@Bean
+	boolean instantiateDatabase() throws ParseException {
+		if (!strategy.equalsIgnoreCase("create")) {
+			return false;
+		}
+
 		dbService.instantiateDatabase();
 		return true;
 	}
-    
-    @Bean
-    public EmailService emailService() {
-    	return new SmtpEmailService();
-    }
+
+	@Bean
+	EmailService emailService() {
+		return new SmtpEmailService();
+	}
 }
