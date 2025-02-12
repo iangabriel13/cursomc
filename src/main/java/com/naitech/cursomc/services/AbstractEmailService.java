@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.naitech.cursomc.domain.Client;
 import com.naitech.cursomc.domain.ClientOrder;
 
 import jakarta.mail.MessagingException;
@@ -71,5 +72,22 @@ public abstract class AbstractEmailService implements EmailService {
 		mimeMessageHelper.setText(htmlFromTemplatePedido(clientOrder), true);
 
 		return mimeMessage;
+	}
+	
+	@Override
+	public void sendNewPasswordEmail(Client client, String newPassword) {
+		SimpleMailMessage simpleMailMessage = prepareNewPasswordEmail(client, newPassword);
+		sendEmail(simpleMailMessage);
+	}
+
+	protected SimpleMailMessage prepareNewPasswordEmail(Client client, String newPassword) {
+		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+		simpleMailMessage.setTo(client.getEmail());
+		simpleMailMessage.setFrom(sender);
+		simpleMailMessage.setSubject("New password request");
+		simpleMailMessage.setSentDate(new Date(System.currentTimeMillis()));
+		simpleMailMessage.setText("New password: " + newPassword);
+
+		return simpleMailMessage;
 	}
 }

@@ -2,6 +2,7 @@ package com.naitech.cursomc.services;
 
 import org.springframework.mail.SimpleMailMessage;
 
+import com.naitech.cursomc.domain.Client;
 import com.naitech.cursomc.domain.ClientOrder;
 
 import jakarta.mail.internet.MimeMessage;
@@ -14,5 +15,7 @@ public interface EmailService {
 	
 	void sendOrderConfirmationHtmlEmail(ClientOrder clientOrder);
 	
-	void sendHtmlEmail(MimeMessage mimeMessage); 
+	void sendHtmlEmail(MimeMessage mimeMessage);
+
+	void sendNewPasswordEmail(Client client, String newPassword); 
 }

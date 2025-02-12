@@ -41,6 +41,12 @@ public class AuthenticationController {
 			}
 			return null;
 		}
-
+	}
+	
+	@PostMapping("/forgot")
+	public ResponseEntity<Void> forgot(@RequestBody AuthenticationRequest request){
+		authenticationService.sendNewPassword(request.getEmail());
+		
+		return ResponseEntity.noContent().build();
 	}
 }
