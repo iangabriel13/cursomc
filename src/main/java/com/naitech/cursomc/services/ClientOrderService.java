@@ -3,6 +3,8 @@ package com.naitech.cursomc.services;
 import java.util.Date;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,8 @@ import com.naitech.cursomc.repositories.ClientOrderRepository;
 import com.naitech.cursomc.repositories.ItemOrderRepository;
 import com.naitech.cursomc.repositories.PaymentRepository;
 import com.naitech.cursomc.repositories.ProductRepository;
+import com.naitech.cursomc.security.User;
+import com.naitech.cursomc.services.exceptions.AuthorizationException;
 import com.naitech.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -67,5 +71,14 @@ public class ClientOrderService {
 		itemOrderRepository.saveAll(clientOrder.getItems());
 		emailService.sendOrderConfirmationHtmlEmail(clientOrder);
 		return clientOrder;
+	}
+	
+	public Page<ClientOrder> findPage(Pageable pageable) {
+		User user = UserService.authenticated();
+		if(user == null) {
+			throw new AuthorizationException("Access denied");
+		}
+		
+		return clientOrderRepository.findByClient(clientService.find(user.getId()), pageable);
 	}
 }
