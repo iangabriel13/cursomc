@@ -34,7 +34,7 @@ public class JwtService {
 	}
 
 	public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-		long expirationMillis = 60000; // 1 minute
+		long expirationMillis = 600000; // 10 minutes
 
 		return Jwts.builder().claims(extraClaims).subject(userDetails.getUsername())
 				.issuedAt(new Date(System.currentTimeMillis()))

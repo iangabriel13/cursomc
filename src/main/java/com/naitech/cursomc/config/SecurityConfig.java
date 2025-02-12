@@ -15,12 +15,13 @@ import com.naitech.cursomc.security.JWTAuthorizationFilter;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfiguration {
+public class SecurityConfig {
 
 	private final JWTAuthorizationFilter jwtAuthorizationFilter;
 	private final AuthenticationProvider authenticationProvider;
 
-	public SecurityConfiguration(JWTAuthorizationFilter jwtAuthorizationFilter, AuthenticationProvider authenticationProvider) {
+	public SecurityConfig(JWTAuthorizationFilter jwtAuthorizationFilter,
+			AuthenticationProvider authenticationProvider) {
 		this.jwtAuthorizationFilter = jwtAuthorizationFilter;
 		this.authenticationProvider = authenticationProvider;
 	}

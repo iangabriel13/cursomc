@@ -3,7 +3,10 @@ package com.naitech.cursomc.security;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.naitech.cursomc.domain.enums.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,6 +41,10 @@ public class User implements UserDetails {
 	@Override
 	public String getPassword() {
 		return password;
+	}
+
+	public boolean hasRole(Role role) {
+		return getAuthorities().contains(new SimpleGrantedAuthority(role.getDescription()));
 	}
 
 }

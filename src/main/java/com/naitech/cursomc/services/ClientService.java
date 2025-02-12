@@ -13,10 +13,13 @@ import com.naitech.cursomc.domain.Address;
 import com.naitech.cursomc.domain.City;
 import com.naitech.cursomc.domain.Client;
 import com.naitech.cursomc.domain.enums.ClientType;
+import com.naitech.cursomc.domain.enums.Role;
 import com.naitech.cursomc.dto.ClientDTO;
 import com.naitech.cursomc.dto.ClientNewDTO;
 import com.naitech.cursomc.repositories.AddressRepository;
 import com.naitech.cursomc.repositories.ClientRepository;
+import com.naitech.cursomc.security.User;
+import com.naitech.cursomc.services.exceptions.AuthorizationException;
 import com.naitech.cursomc.services.exceptions.DataIntegrityException;
 import com.naitech.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -39,6 +42,11 @@ public class ClientService {
 	}
 
 	public Client find(Integer id) {
+		User user = UserService.authenticated();
+		if(user == null || !user.hasRole(Role.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Access denied");
+		}
+		
 		Optional<Client> client = clientRepository.findById(id);
 
 		return client.orElseThrow(
